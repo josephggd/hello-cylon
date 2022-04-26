@@ -16,6 +16,8 @@ target/
 ### IntelliJ IDEA ###
 hello-backend/.idea/**
 hello-frontend/.idea/**
+hello-backend/.idea/misc.xml
+hello-backend/.idea/modules.xml
 *.iws
 *.iml
 *.ipr
