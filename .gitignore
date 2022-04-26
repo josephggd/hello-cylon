@@ -14,10 +14,9 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-hello-backend/.idea/**
-hello-frontend/.idea/**
-hello-backend/.idea/misc.xml
-hello-backend/.idea/modules.xml
+*/.idea/*
+*/.idea/*
+*/.idea/*
 *.iws
 *.iml
 *.ipr
