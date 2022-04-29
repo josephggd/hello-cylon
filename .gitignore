@@ -31,3 +31,30 @@ build/
 
 ### VS Code ###
 .vscode/
+/hello-backend/.idea/
+/hello-frontend/.idea/
+.idea/*
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+hello-frontend/node_modules/
+hello-frontend/.pnp
+hello-frontend/.pnp.js
+
+# testing
+hello-frontend/coverage
+
+# production
+/build
+
+# misc
+hello-frontend/.DS_Store
+hello-frontend/.env.local
+hello-frontend/.env.development.local
+hello-frontend/.env.test.local
+hello-frontend/.env.production.local
+
+hello-frontend/npm-debug.log*
+hello-frontend/yarn-debug.log*
+hello-frontend/yarn-error.log*
