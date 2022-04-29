@@ -38,7 +38,7 @@ build/
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-hello-frontend/node_modules/
+hello-frontend/node_modules/**
 hello-frontend/.pnp
 hello-frontend/.pnp.js
 
