@@ -9,6 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class ToDoItem {
     @Id

@@ -9,7 +9,9 @@ import java.util.Set;
 @Entity
 // Lombok annotation to generate a constructor WITHOUT arguments.
 @NoArgsConstructor
-// Lombok annotation to generate a constructor with REUIQRED arguments.
+// Lombok annotation to generate a constructor with ALL arguments
+@AllArgsConstructor
+// Lombok annotation to generate a constructor with REQUIRED arguments.
 @RequiredArgsConstructor
 // @Data can be used to generate getters/setters, but we want to avoid using @Data on entities.
 public class ToDoList {
