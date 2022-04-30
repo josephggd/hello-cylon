@@ -1,5 +1,6 @@
 package com.example.hellobackend.services;
 
+import com.example.hellobackend.dtos.ToDoListDto;
 import com.example.hellobackend.entities.ToDoList;
 import com.example.hellobackend.repositories.ToDoListRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -49,7 +50,7 @@ class ToDoListServiceTest {
     @DisplayName("saveNewToDoList() should save a new ToDoList")
     void saveNewToDoList_success() {
         // given
-        ToDoList toDoList = new ToDoList();
+        ToDoList toDoList = new ToDoList("title", "description");
         // when
         toDoListService.saveNewToDoList(toDoList);
         // then

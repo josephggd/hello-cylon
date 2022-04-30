@@ -1,5 +1,7 @@
 package com.example.hellobackend.entities;
 
+import com.example.hellobackend.dtos.ToDoItemDto;
+import com.example.hellobackend.dtos.ToDoListDto;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -24,4 +26,7 @@ public class ToDoItem {
     @Getter
     @Setter
     private String description;
+    public ToDoItemDto toDto() {
+        return new ToDoItemDto(this.getTitle(), this.getDescription());
+    }
 }

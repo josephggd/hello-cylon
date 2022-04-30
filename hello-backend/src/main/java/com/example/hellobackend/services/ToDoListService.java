@@ -17,7 +17,9 @@ public class ToDoListService {
     private final ToDoListRepository toDoListRepository;
 
     // Constructor calls on autowired fields
-    public ToDoListService(ToDoListRepository toDoListRepository) {
+    public ToDoListService(
+            ToDoListRepository toDoListRepository
+    ) {
         this.toDoListRepository = toDoListRepository;
     }
 
@@ -29,10 +31,10 @@ public class ToDoListService {
     }
 
     // Save a to do list
-    public ToDoList saveNewToDoList(ToDoList toDoList) {
+    public void saveNewToDoList(ToDoList toDoList) {
         logger.info("Saving new to do list");
         // .save() returns the saved to do list
-        return toDoListRepository.save(toDoList);
+        toDoListRepository.save(toDoList);
     }
 
 

@@ -1,10 +1,12 @@
 package com.example.hellobackend.entities;
 
+import com.example.hellobackend.dtos.ToDoListDto;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 // Lombok annotation to generate a constructor WITHOUT arguments.
@@ -18,7 +20,7 @@ public class ToDoList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    // No getter; ID is generated automatically by JPA.
+    @Setter
     private Long id;
 
     // Getters/setters for each field to eliminate boilerplate code.
@@ -45,5 +47,25 @@ public class ToDoList {
             joinColumns = @JoinColumn(name = "list_id"),
             // Name of the MANY side's column.
             inverseJoinColumns = @JoinColumn(name = "item_id"))
-    private Set<ToDoItem> items = new HashSet<>();
+    private List<ToDoItem> items = new ArrayList<>();
+    // Returns a DTO from an entity
+    public ToDoListDto toDto() {
+        ToDoListDto dto = new ToDoListDto();
+        dto.setId(id);
+        dto.setTitle(title);
+        dto.setDescription(description);
+        dto.setItems(items
+                .stream()
+                .map(ToDoItem::toDto)
+                .collect(Collectors.toList()));
+        return dto;
+//        return new ToDoListDto(
+//                id,
+//                title,
+//                description,
+//                items
+//                    .stream()
+//                    .map(ToDoItem::toDto)
+//                    .collect(Collectors.toList()));
+    }
 }

@@ -3,8 +3,7 @@ package com.example.hellobackend.entities;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -33,7 +32,7 @@ class ToDoListTest {
         ToDoList toDoList = new ToDoList();
         toDoList.setDescription(testArg);
         assertEquals(toDoList.getDescription(), testArg);
-        Set<ToDoItem> items = new HashSet<>();
+        List<ToDoItem> items = List.of();
         toDoList.setItems(items);
         assertEquals(toDoList.getItems(), items);
     }
@@ -49,7 +48,7 @@ class ToDoListTest {
     @Test
     @DisplayName("test id getter & allargs constructor")
     void testId() {
-        ToDoList toDoList = new ToDoList(0L, "title", "description", new HashSet<>());
+        ToDoList toDoList = new ToDoList(0L, "title", "description", List.of());
         assertEquals(toDoList.getId(), 0);
     }
 }

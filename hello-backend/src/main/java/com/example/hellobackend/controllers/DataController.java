@@ -1,48 +1,56 @@
 package com.example.hellobackend.controllers;
 
+import com.example.hellobackend.dtos.ToDoListDto;
 import com.example.hellobackend.entities.ToDoList;
 import com.example.hellobackend.services.ToDoListService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-// The RestController/Controller annotations are used to mark a class as a controller.
 @RestController
-// Prefix for all the endpoints on this controller.
 @RequestMapping("/data")
-// Controller functions should return a ResponseEntity containing the response body.
 public class DataController {
-    // Logger instantiated for the class.
     Logger logger = Logger.getLogger(DataController.class.getName());
 
-    // Declare ToDoListService as a field/dependency.
     private final ToDoListService toDoListService;
 
-    // Constructor injects Service.
     public DataController(ToDoListService toDoListService) {
         this.toDoListService = toDoListService;
     }
 
-    // GET request to find all ToDoLists.
     // Full mapping to the endpoint: "localhost:9090/data/all"
     @GetMapping("/all")
-    public ResponseEntity<List<ToDoList>> getAllToDoLists() {
-        // logger shows data in the terminal.
+    public ResponseEntity<List<ToDoListDto>> getAllToDoLists() {
         logger.info("getAllToDoLists() called");
-        return ResponseEntity.ok(toDoListService.findAllToDoLists());
+        List<ToDoList> toDoLists = toDoListService.findAllToDoLists();
+        // Streams are an extremely powerful way to iterate over a collection of objects.
+        // Here we convert a list to a stream, which allows us to use the map() method.
+        List<ToDoListDto> toDoListDtos = toDoLists
+                .stream()
+                // map() is a method that takes a function as an argument.
+                // If the given functioin takes our stream's elements as arguments,
+                // it returns a new stream containing the return of the function.
+                .map(ToDoList::toDto)
+                // Collect() converts the stream back to a collection like a list or set.
+                .collect(java.util.stream.Collectors.toList());
+        return ResponseEntity.ok(toDoListDtos);
     }
 
-    // POST request to create a new ToDoList.
     @PostMapping("/add")
     // Full mapping to the endpoint: "localhost:9090/data/add"
     // Requires a ToDoList object in the request body: {"title": "title", "description": "description"}
-    public ResponseEntity<ToDoList> postNewToDoList(ToDoList toDoList) {
+    public ResponseEntity<String> postNewToDoList(
+            @RequestBody ToDoListDto toDoListDto
+    ) {
         logger.info("postNewToDoList() called");
-        return ResponseEntity.ok(toDoListService.saveNewToDoList(toDoList));
+        ToDoList toDoList = toDoListDto.toEntity();
+        System.out.println("aaa:"+toDoList);
+        toDoListService.saveNewToDoList(toDoList);
+//        System.out.println("bnbb:"+savedToDoList);
+//        ToDoListDto savedToDoListDto = savedToDoList.toDto();
+//        System.out.println("ccccc:"+savedToDoListDto);
+        return ResponseEntity.ok("ToDoList saved");
     }
 }
