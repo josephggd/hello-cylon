@@ -18,8 +18,10 @@ import static org.mockito.Mockito.verify;
 @DisplayName("ToDoListService tests:")
 class ToDoListServiceTest {
     private AutoCloseable autoCloseable;
+    // Mock is used to simulate the behavior of the repository
     @Mock
     private ToDoListRepository toDoListRepository;
+    // InjectMocks is used to inject the mock into the service
     @InjectMocks
     ToDoListService toDoListService;
 
