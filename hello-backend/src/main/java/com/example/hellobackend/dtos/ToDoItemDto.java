@@ -1,7 +1,6 @@
 package com.example.hellobackend.dtos;
 
 import com.example.hellobackend.entities.ToDoItem;
-import com.example.hellobackend.entities.ToDoItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;

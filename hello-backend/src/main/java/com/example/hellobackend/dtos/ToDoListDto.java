@@ -1,8 +1,10 @@
 package com.example.hellobackend.dtos;
 
 import com.example.hellobackend.entities.ToDoList;
-import lombok.*;
-import org.springframework.lang.Nullable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.example.hellobackend.controllers;
 
-import com.example.hellobackend.dtos.ToDoItemDto;
 import com.example.hellobackend.dtos.ToDoListDto;
 import com.example.hellobackend.entities.ToDoList;
 import com.example.hellobackend.services.ToDoListService;
@@ -9,17 +8,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -72,8 +67,6 @@ class DataControllerTest {
     void postNewToDoList_success() throws Exception {
         // given
         ToDoListDto toDoListDto = new ToDoListDto("name", "description", List.of());
-//        given(toDoListService.saveNewToDoList(toDoListDto.toEntity()))
-//                .willReturn(new ToDoList("name", "description"));
         // when
         // then
         mockMvc.perform(post("/data/add")

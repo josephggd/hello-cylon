@@ -1,6 +1,5 @@
 package com.example.hellobackend.services;
 
-import com.example.hellobackend.dtos.ToDoListDto;
 import com.example.hellobackend.entities.ToDoList;
 import com.example.hellobackend.repositories.ToDoListRepository;
 import org.junit.jupiter.api.AfterEach;

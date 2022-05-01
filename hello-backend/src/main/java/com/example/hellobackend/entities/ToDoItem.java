@@ -1,7 +1,6 @@
 package com.example.hellobackend.entities;
 
 import com.example.hellobackend.dtos.ToDoItemDto;
-import com.example.hellobackend.dtos.ToDoListDto;
 import lombok.*;
 
 import javax.persistence.Entity;

@@ -1,5 +1,6 @@
 package com.example.hellobackend.entities;
 
+import com.example.hellobackend.dtos.ToDoItemDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -38,5 +39,13 @@ class ToDoItemTest {
     void testId() {
         ToDoItem toDoItem = new ToDoItem(0L, "title", "description");
         assertEquals(toDoItem.getId(), 0);
+    }
+    @Test
+    @DisplayName("tests toDto method")
+    void testToDto() {
+        ToDoItem toDoItem = new ToDoItem(0L, "title", "description");
+        ToDoItemDto toDoItemDto = toDoItem.toDto();
+        assertEquals(toDoItemDto.getTitle(), toDoItem.getTitle());
+        assertEquals(toDoItemDto.getDescription(), toDoItem.getDescription());
     }
 }
