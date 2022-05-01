@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// A JPA entity creates an Object Relational Mapping (ORM) for the entity.
+// This means that we can think of each entity object/class instance as a row in a database table.
 @Entity
 // Lombok annotation to generate a constructor WITHOUT arguments.
 @NoArgsConstructor
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 // @Data can be used to generate getters/setters, but we want to avoid using @Data on entities.
 public class ToDoList {
+    // Primary key is an auto-incrementing integer (required by JPA)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -59,13 +62,5 @@ public class ToDoList {
                 .map(ToDoItem::toDto)
                 .collect(Collectors.toList()));
         return dto;
-//        return new ToDoListDto(
-//                id,
-//                title,
-//                description,
-//                items
-//                    .stream()
-//                    .map(ToDoItem::toDto)
-//                    .collect(Collectors.toList()));
     }
 }
