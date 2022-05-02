@@ -98,9 +98,8 @@ describe("successful API requests", () => {
   });
 });
 describe("failed API requests", () => {
-  // Mocking axios/any other modules in use is required for testing
+  // In order to fully test our code we'll be testing for scenarios where the API call fails
   const mockedAxios = axios as jest.Mocked<typeof axios>;
-  // Creating constants to use throughout tests (don't need to create multiple instances)
   const toDoListJson:ToDoListJson = {toDoLists: []};
   it("GET request is made properly", async () => {
     const mockedResponse = { data:toDoListJson };
