@@ -30,12 +30,25 @@ public class ToDoListService {
         return toDoListRepository.findAll();
     }
 
+    // Get to do list by id
+    public ToDoList findToDoListById(Long id) {
+        logger.info("Getting to do list: " + id);
+        // or Else throw prevents us from returning Optional.empty()
+        return toDoListRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("No to do list found with id: " + id)
+        );
+    }
+
     // Save a to do list
-    public void saveNewToDoList(ToDoList toDoList) {
-        logger.info("Saving new to do list");
+    public void saveOrUpdateToDoList(ToDoList toDoList) {
+        logger.info("Saving/updating to do list");
         // .save() returns the saved to do list
         toDoListRepository.save(toDoList);
     }
 
-
+    public void deleteToDoList(ToDoList toDoList) {
+        logger.info("Deleting to do list: " + toDoList.getTitle());
+        // .delete() returns the deleted to do list
+        toDoListRepository.delete(toDoList);
+    }
 }

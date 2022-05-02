@@ -1,18 +1,20 @@
 package com.example.hellobackend.dtos;
 
 import com.example.hellobackend.entities.ToDoItem;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
+
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+// Covers all arguments not marked as NonNull (i.e. the ID, which is not included in the first POST)
+@RequiredArgsConstructor
 public class ToDoItemDto {
-    @NonNull
+    private Long id;
+    @NonNull // AKA required
     private String title;
-    @NonNull
+    @NonNull // AKA required
     private String description;
-    // Returns an entity from a DTO
     public ToDoItem toEntity() {
         ToDoItem toDoItem = new ToDoItem();
         toDoItem.setTitle(this.title);
