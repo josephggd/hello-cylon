@@ -1,48 +1,125 @@
 package com.example.hellobackend.controllers;
 
+import com.example.hellobackend.dtos.ToDoItemDto;
+import com.example.hellobackend.dtos.ToDoListDto;
+import com.example.hellobackend.entities.ToDoItem;
 import com.example.hellobackend.entities.ToDoList;
+import com.example.hellobackend.services.ToDoItemService;
 import com.example.hellobackend.services.ToDoListService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
-// The RestController/Controller annotations are used to mark a class as a controller.
 @RestController
-// Prefix for all the endpoints on this controller.
 @RequestMapping("/data")
-// Controller functions should return a ResponseEntity containing the response body.
 public class DataController {
-    // Logger instantiated for the class.
     Logger logger = Logger.getLogger(DataController.class.getName());
 
-    // Declare ToDoListService as a field/dependency.
     private final ToDoListService toDoListService;
+    private final ToDoItemService toDoItemService;
 
-    // Constructor injects Service.
-    public DataController(ToDoListService toDoListService) {
+    public DataController(
+            ToDoListService toDoListService,
+            ToDoItemService toDoItemService
+    ) {
         this.toDoListService = toDoListService;
+        this.toDoItemService = toDoItemService;
     }
 
-    // GET request to find all ToDoLists.
     // Full mapping to the endpoint: "localhost:9090/data/all"
     @GetMapping("/all")
-    public ResponseEntity<List<ToDoList>> getAllToDoLists() {
-        // logger shows data in the terminal.
+    public ResponseEntity<Map<String, List<ToDoListDto>>> getAllToDoLists() {
         logger.info("getAllToDoLists() called");
-        return ResponseEntity.ok(toDoListService.findAllToDoLists());
+        List<ToDoList> toDoLists = toDoListService.findAllToDoLists();
+        // Streams are an extremely powerful way to iterate over a collection of objects.
+        // Here we convert a list to a stream, which allows us to use the map() method.
+        List<ToDoListDto> toDoListDtos = toDoLists
+                .stream()
+                // map() is a method that takes a function as an argument.
+                // If the given function takes our stream's elements as arguments,
+                // it returns a new stream containing the return of the function.
+                .map(ToDoList::toDto)
+                // Collect() converts the stream back to a collection like a list or set.
+                .collect(java.util.stream.Collectors.toList());
+        // Finally we create a map to return an organized JSON (vs a list of JSONs).
+        Map<String, List<ToDoListDto>> responseJson = new HashMap<>();
+        responseJson.put("todolists", toDoListDtos);
+        return ResponseEntity.ok(responseJson);
     }
 
-    // POST request to create a new ToDoList.
-    @PostMapping("/add")
-    // Full mapping to the endpoint: "localhost:9090/data/add"
+    @PostMapping("/save/list")
+    // Full mapping to the endpoint: "localhost:9090/data/save"
     // Requires a ToDoList object in the request body: {"title": "title", "description": "description"}
-    public ResponseEntity<ToDoList> postNewToDoList(ToDoList toDoList) {
+    public ResponseEntity<String> postNewToDoList(
+            @RequestBody ToDoListDto toDoListDto
+    ) {
         logger.info("postNewToDoList() called");
-        return ResponseEntity.ok(toDoListService.saveNewToDoList(toDoList));
+        ToDoList toDoList = toDoListDto.toEntity();
+        toDoListService.saveOrUpdateToDoList(toDoList);
+        return ResponseEntity.ok("SAVED");
+    }
+
+    @PostMapping("/save/item")
+    // Full mapping to the endpoint: "localhost:9090/data/save"
+    // Requires a ToDoList object in the request body: {"title": "title", "description": "description"}
+    public ResponseEntity<String> postNewToDoItem(
+            @RequestBody ToDoItemDto toDoItemDto
+    ) {
+        logger.info("postNewToDoList() called");
+        ToDoItem toDoItem = toDoItemDto.toEntity();
+        toDoItemService.saveOrUpdateToDoItem(toDoItem);
+        return ResponseEntity.ok("SAVED");
+    }
+
+    @PutMapping("/update/list")
+    // Full mapping to the endpoint: "localhost:9090/data/update/list"
+    // Requires a ToDoList object in the request body: {id:1, "title": "title", "description": "description"}
+    public ResponseEntity<String> putUpdateToDoList(
+            @RequestBody ToDoListDto toDoListDto
+    ) {
+        logger.info("postNewToDoList() called");
+        ToDoList toDoList = toDoListDto.toEntity();
+        toDoListService.saveOrUpdateToDoList(toDoList);
+        return ResponseEntity.ok("UPDATED");
+    }
+
+    @PutMapping("/update/item")
+    // Full mapping to the endpoint: "localhost:9090/data/update/item"
+    // Requires a ToDoList object in the request body: {id:1, "title": "title", "description": "description"}
+    public ResponseEntity<String> putUpdateToDoItem(
+            @RequestBody ToDoItemDto toDoItemDto
+    ) {
+        logger.info("postNewToDoList() called");
+        ToDoItem toDoItem = toDoItemDto.toEntity();
+        toDoItemService.saveOrUpdateToDoItem(toDoItem);
+        return ResponseEntity.ok("UPDATED");
+    }
+
+    @DeleteMapping("/delete/list/{id}")
+    // Full mapping to the endpoint: "localhost:9090/data/delete/list/1"
+    public ResponseEntity<String> deleteToDoList(
+            @PathVariable("id") Long id
+    ) {
+        logger.info("postNewToDoList() called");
+        // Find the entity to make sure it exists
+        ToDoList toDoList = toDoListService.findToDoListById(id);
+        // Delete the entity
+        toDoListService.saveOrUpdateToDoList(toDoList);
+        return ResponseEntity.ok("DELETED");
+    }
+
+    @DeleteMapping("/delete/item/{id}")
+    // Full mapping to the endpoint: "localhost:9090/data/delete/item/1"
+    public ResponseEntity<String> deleteToDoItem(
+            @PathVariable("id") Long id
+    ) {
+        logger.info("postNewToDoList() called");
+        ToDoItem toDoItem = toDoItemService.findToDoItemById(id);
+        toDoItemService.deleteToDoItem(toDoItem);
+        return ResponseEntity.ok("DELETED");
     }
 }
