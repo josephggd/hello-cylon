@@ -2,8 +2,9 @@ import React from "react";
 import {EditListProps} from "./EditListProps";
 import {postNewToDoList, putUpdateToDoList} from "../../api/ApiRequests";
 import {ToDoList} from "../../../dtos/ToDoList";
-import {ToDoItem} from "../../../dtos/ToDoItem";
+// import {ToDoItem} from "../../../dtos/ToDoItem";
 import {EditItem} from "../EditItem/EditItem";
+import {handleSubmit} from "./EditListFunctions";
 
 export function EditList(props:EditListProps){
   let initialList:ToDoList = {
@@ -13,20 +14,6 @@ export function EditList(props:EditListProps){
     items:[]};
   if (props.editedList) {
     initialList = props.editedList;
-  }
-
-  function handleSubmit(toDoList:ToDoList){
-    let items:ToDoItem[] = [];
-    props.editedList.items.forEach(item => {
-      if (item.title!=="" && item.description!=="") {
-        items.push(item);
-      }
-    });
-    submitList({...toDoList, items:items})
-      .then(() => {
-        props.setEditedList({id:null, title:"", description:"", items:[]});
-        props.setRefresh(true);
-      });
   }
   const submitList = initialList.id!=null ? putUpdateToDoList : postNewToDoList;
   return (
@@ -73,7 +60,13 @@ export function EditList(props:EditListProps){
                     const items = props.editedList.items.concat({id:null, title:"", description:""});
                     props.setEditedList({...props.editedList, items:items});
                   }}>Add Item</button>
-                  <button onClick={() => handleSubmit(initialList)}>Save List</button>
+                  <button onClick={() => handleSubmit(
+                    initialList,
+                    props.editedList.items,
+                    submitList,
+                    props.setEditedList,
+                    props.setRefresh
+                  )}>Save List</button>
               </div>
           </div>}
     </div>
