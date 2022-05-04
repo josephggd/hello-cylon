@@ -12,20 +12,20 @@ export function EditItem(props: EditItemProps) {
     initialTitle = props.item.title;
     initialDescription = props.item.description;
   }
-  const [item, setItem] = React.useState<ToDoItem>({id:initialId,
-    title:initialTitle,
-    description:initialDescription});
-
-  function handleItemChanges() {
+  const initialItem = {
+    id: initialId,
+    title: initialTitle,
+    description: initialDescription
+  };
+  function handleItemChanges(toDoItem: ToDoItem) {
     const allItems = props.items;
-    allItems[props.index] = item;
+    allItems[props.index] = toDoItem;
     const nonNullItems:ToDoItem[] = [];
     allItems.forEach(possiblyNullItem => {
       if (possiblyNullItem !== null && possiblyNullItem.title !== "") {
         nonNullItems.push(possiblyNullItem);
       }
     });
-    props.setItems(allItems);
     props.setEditedList({...props.editedList, items:nonNullItems});
   }
 
@@ -37,10 +37,9 @@ export function EditItem(props: EditItemProps) {
         type="text"
         minLength={1}
         maxLength={8}
-        value={item.title}
+        value={initialItem.title}
         onChange={(e) => {
-          setItem({...item, title: e.target.value})
-          handleItemChanges()
+          handleItemChanges({...initialItem, title:e.target.value})
         }}
       /><br/>
       <label htmlFor={`item-input-${props.index}`}>Description {props.index}</label>
@@ -49,10 +48,9 @@ export function EditItem(props: EditItemProps) {
         type="text"
         minLength={1}
         maxLength={12}
-        value={item.description}
+        value={initialItem.description}
         onChange={(e) => {
-          setItem({...item, description: e.target.value})
-          handleItemChanges()
+          handleItemChanges({...initialItem, description:e.target.value})
         }}
       />
     </div>

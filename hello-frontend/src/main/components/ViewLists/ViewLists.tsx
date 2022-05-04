@@ -1,18 +1,41 @@
 import React from "react";
+import styled from "styled-components";
 import {ViewListsProps} from "./ViewListsProps";
 
 export function ViewLists(props:ViewListsProps) {
   return (
-    <div>
+    <div className="ContainerCol">
       <h1>View Lists</h1>
-      <ul>
+      <div>
         {props.lists.map(list => (
-          <li key={list.id}>
-            <h4>{list.title}</h4><br/>
-            <p>{list.description}</p>
-          </li>
+          <ViewList
+            key={list.id}
+            onClick={() => {
+              props.setSelectedList(list);
+              props.setShowInput(true);
+            }}
+          >
+            {list.title} : {list.description}<br/><br/>
+            <li>
+              {list.items.map((item) => (
+                <ul>{item.title} : {item.description}</ul>
+              ))}
+            </li>
+          </ViewList>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
+
+const ViewList = styled.div`
+  display: flex;
+  justify-content: center;
+  border: 1px solid #2b2d2f;
+  width:300px;
+  height:75px;
+  :hover {
+    background-color:#2b2d2f;
+  }
+  overflow: auto;
+`;

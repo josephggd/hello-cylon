@@ -7,5 +7,4 @@ export interface EditItemProps {
   setEditedList: (list: ToDoList) => void;
   item: ToDoItem|null;
   items: (ToDoItem|null)[];
-  setItems: (items: (ToDoItem|null)[]) => void;
 }
