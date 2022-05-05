@@ -1,5 +1,5 @@
 import {EditItem} from "./EditItem";
-import {render, screen} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import {testList} from "../../../dtos/ToDoList";
 import {testItem, testItems} from "../../../dtos/ToDoItem";
 import React from "react";

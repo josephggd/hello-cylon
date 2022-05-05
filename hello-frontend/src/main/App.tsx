@@ -3,7 +3,7 @@ import React, {useEffect} from "react";
 import {blankList, ToDoList} from "../dtos/ToDoList";
 import {ViewLists} from "./components/ViewLists/ViewLists";
 import {EditList} from "./components/EditLists/EditList";
-import {deleteToDoList, getAllToDoLists, postNewToDoList, putUpdateToDoList} from "./api/ApiRequests";
+import {getAllToDoLists} from "./api/ApiRequests";
 import styled from "styled-components";
 import {handleSubmit} from "./components/EditLists/EditListFunctions";
 

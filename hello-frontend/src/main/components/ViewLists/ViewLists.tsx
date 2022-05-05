@@ -2,18 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import {ViewListsProps} from "./ViewListsProps";
 import Button from '@mui/material/Button';
-// import {blankList} from "../../../dtos/ToDoList";
 import {deleteList} from "./ViewListsFunctions";
 import {deleteToDoList} from "../../api/ApiRequests";
 
 export function ViewLists(props:ViewListsProps) {
   return (
     <div className="ContainerCol">
-      <h3>View Lists</h3>
+      <h3 data-testid={"view-lists-header"}>View Lists</h3>
       <ul>
         {props.lists.length>0 && props.lists.map((list, index) => (
           <ViewList
             key={index}
+            data-testid={"view-list-"+index}
             onClick={() => {
               props.setSelectedList(list);
               if (!props.showInput) {
@@ -22,13 +22,16 @@ export function ViewLists(props:ViewListsProps) {
             }}
           >
             {list.title} : {list.description}
-            <Button variant="contained" color="error" onClick={()=>{
+            <Button
+              data-testid={"delete-list-"+index}
+              variant="contained"
+              color="error" onClick={()=>{
               deleteList(deleteToDoList, list, props.lists, props.setShowInput, props.setSelectedList, props.setLists);
             }
             }>DELETE</Button>
           </ViewList>
         ))}
-        {props.lists.length === 0 && <p>No lists to show</p>}
+        {props.lists.length === 0 && <p data-testid={"no-lists"}>No lists to show</p>}
       </ul>
     </div>
   );

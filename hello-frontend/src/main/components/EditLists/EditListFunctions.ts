@@ -11,8 +11,9 @@ export function handleSubmit(
   const submitList = toDoList.id!=null ? putUpdateToDoList : postNewToDoList;
   if (toDoList.title.length > 0 && toDoList.description.length > 0) {
     const newList:ToDoList = {...toDoList, items: toDoItems};
-    submitList(newList);
-    setEditedList(blankList);
-    setRefresh(true);
+    submitList(newList).then(() => {
+      setEditedList(blankList);
+      setRefresh(true);
+    });
   }
 }

@@ -1,8 +1,6 @@
 import React from "react";
 import {EditItemProps} from "./EditItemProps";
-import {ToDoItem} from "../../../dtos/ToDoItem";
 import {ItemField} from "../ItemField/ItemField";
-import {blankList} from "../../../dtos/ToDoList";
 import {handleItemChanges} from "../ItemField/ItemFieldFunctions";
 
 export function EditItem(props: EditItemProps) {

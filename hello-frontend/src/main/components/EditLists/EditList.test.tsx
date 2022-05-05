@@ -1,9 +1,8 @@
 import {EditList} from "./EditList";
 import {render, screen} from '@testing-library/react';
 import {blankList, testList, testLists} from "../../../dtos/ToDoList";
-import {blankItem, testItem, testItems} from "../../../dtos/ToDoItem";
+import {blankItem, testItem} from "../../../dtos/ToDoItem";
 import React from "react";
-import {putUpdateToDoList} from "../../api/ApiRequests";
 import userEvent from "@testing-library/user-event";
 
 describe('EditItem', () => {
@@ -138,9 +137,9 @@ describe('EditItem', () => {
       setEditedList={setEditedList}
       handleSubmit={handleSubmit}
     />);
-    const firstTitle = screen.getByTestId("input-title");
+    const firstTitle = screen.getByTestId("title-input");
     expect(firstTitle).toBeInTheDocument();
-    const firstDescription = screen.getByTestId("input-description");
+    const firstDescription = screen.getByTestId("description-input");
     expect(firstDescription).toBeInTheDocument();
   });
 });

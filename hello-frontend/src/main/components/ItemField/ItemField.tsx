@@ -13,7 +13,7 @@ export function ItemField(props:ItemFieldProps) {
       type="text"
       required={true}
       value={props.value}
-      data-testid={"input-"+props.field}
+      data-testid={"input-"+props.field+"-"+props.index}
       onChange={(e:ChangeEvent<HTMLInputElement>) => {
         props.handleItemChange(
           {...props.item, [props.field]:e.target.value},

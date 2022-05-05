@@ -1,11 +1,7 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
 import {ViewLists} from './ViewLists';
-import {blankList, testList, testLists} from "../../../dtos/ToDoList";
-import userEvent from "@testing-library/user-event";
+import {testList, testLists} from "../../../dtos/ToDoList";
 import {deleteList} from "./ViewListsFunctions";
-import assert from "assert";
-import {deleteToDoList} from "../../api/ApiRequests";
 
 describe("ViewLists", () => {
 
