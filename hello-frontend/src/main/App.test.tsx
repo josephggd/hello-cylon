@@ -4,6 +4,8 @@ import App from './App';
 
 test("renders welcome message", () => {
   render(<App />);
-  const linkElement = screen.getByText(/Welcome/i);
-  expect(linkElement).toBeInTheDocument();
+  const viewElement = screen.getByText(/View Lists/i);
+  expect(viewElement).toBeInTheDocument();
+  const editElement = screen.getByText(/Edit/i);
+  expect(editElement).toBeInTheDocument();
 });

@@ -1,4 +1,4 @@
-import {ToDoItem} from "./ToDoItem";
+import {testItems, ToDoItem} from "./ToDoItem";
 
 // On the backend we created DTOs; any DTOs must match field names on their frontend counterparts
 export interface ToDoList {
@@ -7,3 +7,17 @@ export interface ToDoList {
   description: string;
   items: ToDoItem[];
 }
+
+export const blankList:ToDoList = {
+  id: null,
+  title: "",
+  description: "",
+  items: []
+};
+export const testList:ToDoList = {
+  id: 1,
+  title: "test",
+  description: "test",
+  items:[]
+};
+export const testLists = [testList];

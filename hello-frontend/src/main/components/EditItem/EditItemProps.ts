@@ -5,6 +5,6 @@ export interface EditItemProps {
   index: number;
   editedList: ToDoList;
   setEditedList: (list: ToDoList) => void;
-  item: ToDoItem|null;
+  item: ToDoItem;
   items: (ToDoItem|null)[];
 }

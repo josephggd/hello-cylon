@@ -1,16 +1,18 @@
 import './App.css';
 import React, {useEffect} from "react";
-import {ToDoList} from "../dtos/ToDoList";
+import {blankList, ToDoList} from "../dtos/ToDoList";
 import {ViewLists} from "./components/ViewLists/ViewLists";
 import {EditList} from "./components/EditLists/EditList";
-import {getAllToDoLists} from "./api/ApiRequests";
+import {deleteToDoList, getAllToDoLists, postNewToDoList, putUpdateToDoList} from "./api/ApiRequests";
 import styled from "styled-components";
+import {handleSubmit} from "./components/EditLists/EditListFunctions";
 
 function App() {
   const [refresh, setRefresh] = React.useState(true);
   const [lists, setLists] = React.useState<ToDoList[]>([]);
-  const [selectedList, setSelectedList] = React.useState<ToDoList>({id:null, title:"",description:"",items:[]});
+  const [selectedList, setSelectedList] = React.useState<ToDoList>(blankList);
   const [showInput, setShowInput] = React.useState(false);
+
   useEffect(() => {
     if (refresh) {
       getAllToDoLists().then((response) => {
@@ -41,6 +43,7 @@ function App() {
             setShowInput={setShowInput}
             editedList={selectedList}
             setEditedList={setSelectedList}
+            handleSubmit={handleSubmit}
           />
         </TwoColumnDiv>
       </header>
@@ -49,6 +52,7 @@ function App() {
 }
 
 const TwoColumnDiv = styled.div`
+  background-color: #D3D3D3;
   border: 1px solid white;
   border-radius: 15px;
   display: flex;

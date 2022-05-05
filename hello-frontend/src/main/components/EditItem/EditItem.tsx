@@ -1,38 +1,32 @@
 import React from "react";
 import {EditItemProps} from "./EditItemProps";
 import {ToDoItem} from "../../../dtos/ToDoItem";
-// import {ToDoList} from "../../../dtos/ToDoList";
-// import {handleItemChanges} from "./EditItemFunctions";
 import {ItemField} from "../ItemField/ItemField";
+import {blankList} from "../../../dtos/ToDoList";
+import {handleItemChanges} from "../ItemField/ItemFieldFunctions";
 
 export function EditItem(props: EditItemProps) {
-  let initialItem:ToDoItem = {
-    id:null,
-    title:"",
-    description:""
-  };
-  if (props.item) {
-    initialItem = props.item;
-  }
-
   return(
-    <div key={props.index}>
+    <div key={props.index} style={{"padding":"4px"}}>
       <ItemField
-        item={initialItem}
+        item={props.item}
+        max={12}
         field={"title"}
-        value={initialItem.title}
+        value={props.item.title}
         editedList={props.editedList}
         setEditedList={props.setEditedList}
         index={props.index}
+        handleItemChange={handleItemChanges}
       />
-      <br/>
       <ItemField
-        item={initialItem}
+        item={props.item}
+        max={24}
         field={"description"}
-        value={initialItem.description}
+        value={props.item.description}
         editedList={props.editedList}
         setEditedList={props.setEditedList}
         index={props.index}
+        handleItemChange={handleItemChanges}
       />
     </div>
   )

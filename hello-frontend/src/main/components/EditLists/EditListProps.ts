@@ -1,4 +1,5 @@
 import {ToDoList} from "../../../dtos/ToDoList";
+import {ToDoItem} from "../../../dtos/ToDoItem";
 
 export interface EditListProps {
   lists: ToDoList[];
@@ -9,4 +10,10 @@ export interface EditListProps {
   setShowInput: (showInput: boolean) => void;
   editedList: ToDoList;
   setEditedList: (list: ToDoList) => void;
+  handleSubmit: (
+    toDoList:ToDoList,
+    toDoItems:ToDoItem[],
+    setEditedList:(toDoList:ToDoList) => void,
+    setRefresh:(refresh:boolean) => void
+  ) => void;
 }

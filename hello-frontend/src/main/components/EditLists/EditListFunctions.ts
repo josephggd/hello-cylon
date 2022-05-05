@@ -1,22 +1,24 @@
-import {ToDoList} from "../../../dtos/ToDoList";
+import {blankList, ToDoList} from "../../../dtos/ToDoList";
 import {ToDoItem} from "../../../dtos/ToDoItem";
+import {postNewToDoList, putUpdateToDoList} from "../../api/ApiRequests";
 
 export function handleSubmit(
   toDoList:ToDoList,
   toDoItems:ToDoItem[],
-  submitList:(toDoList:ToDoList) => Promise<string>,
   setEditedList:(toDoList:ToDoList) => void,
   setRefresh:(refresh:boolean) => void
 ) {
-  let items:ToDoItem[] = [];
-  toDoItems.forEach(item => {
-    if (item.title!=="" && item.description!=="") {
-      items.push(item);
-    }
-  });
-  submitList({...toDoList, items:items})
-    .then(() => {
-      setEditedList({id:null, title:"", description:"", items:[]});
-      setRefresh(true);
-    });
+  const submitList = toDoList.id!=null ? putUpdateToDoList : postNewToDoList;
+  if (toDoList.title.length > 0 && toDoList.description.length > 0) {
+    // let items: ToDoItem[] = [];
+    // toDoItems.forEach(item => {
+    //   if (item.title !== "" && item.description !== "") {
+    //     items.push(item);
+    //   }
+    // });
+    const newList:ToDoList = {...toDoList, items: toDoItems};
+    submitList(newList);
+    setEditedList(blankList);
+    setRefresh(true);
+  }
 }

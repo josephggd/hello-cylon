@@ -1,41 +1,52 @@
 import React from "react";
 import styled from "styled-components";
 import {ViewListsProps} from "./ViewListsProps";
+import Button from '@mui/material/Button';
+// import {blankList} from "../../../dtos/ToDoList";
+import {deleteList} from "./ViewListsFunctions";
+import {deleteToDoList} from "../../api/ApiRequests";
 
 export function ViewLists(props:ViewListsProps) {
   return (
     <div className="ContainerCol">
-      <h1>View Lists</h1>
-      <div>
-        {props.lists.map(list => (
+      <h3>View Lists</h3>
+      <ul>
+        {props.lists.length>0 && props.lists.map((list, index) => (
           <ViewList
-            key={list.id}
+            key={index}
             onClick={() => {
               props.setSelectedList(list);
-              props.setShowInput(true);
+              if (!props.showInput) {
+                props.setShowInput(true);
+              }
             }}
           >
-            {list.title} : {list.description}<br/><br/>
-            <li>
-              {list.items.map((item) => (
-                <ul>{item.title} : {item.description}</ul>
-              ))}
-            </li>
+            {list.title} : {list.description}
+            <Button variant="contained" color="error" onClick={()=>{
+              deleteList(deleteToDoList, list, props.lists, props.setShowInput, props.setSelectedList, props.setLists);
+            }
+            }>DELETE</Button>
           </ViewList>
         ))}
-      </div>
+        {props.lists.length === 0 && <p>No lists to show</p>}
+      </ul>
     </div>
   );
 }
 
-const ViewList = styled.div`
+const ViewList = styled.li`
   display: flex;
-  justify-content: center;
-  border: 1px solid #2b2d2f;
-  width:300px;
-  height:75px;
+  font-size: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  justify-content: space-between;
+  width:380px;
+  height:60px;
+  background-color:#2b2d2f;
+  color:white;
   :hover {
-    background-color:#2b2d2f;
+    background-color:#3a6fd8;
+    color:#2b2d2f;
   }
-  overflow: auto;
+  overflow:auto;
 `;

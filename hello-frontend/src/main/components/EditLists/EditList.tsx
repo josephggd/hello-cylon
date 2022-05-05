@@ -1,74 +1,81 @@
 import React from "react";
 import {EditListProps} from "./EditListProps";
 import {postNewToDoList, putUpdateToDoList} from "../../api/ApiRequests";
-import {ToDoList} from "../../../dtos/ToDoList";
+import {blankList} from "../../../dtos/ToDoList";
 // import {ToDoItem} from "../../../dtos/ToDoItem";
 import {EditItem} from "../EditItem/EditItem";
 import {handleSubmit} from "./EditListFunctions";
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import {blankItem} from "../../../dtos/ToDoItem";
 
 export function EditList(props:EditListProps){
-  let initialList:ToDoList = {
-    id:null,
-    title:"",
-    description:"",
-    items:[]};
-  if (props.editedList) {
-    initialList = props.editedList;
-  }
-  const submitList = initialList.id!=null ? putUpdateToDoList : postNewToDoList;
   return (
     <div className="ContainerCol">
-      <h1>Edit {props.editedList.title}</h1>
-      <button onClick={() => {
-        props.setShowInput(true);
-        props.setEditedList({id:null, title:"", description:"", items:[]});
+      <h3 data-testid="edit-list-header">Edit {props.editedList.title}</h3>
+      <Button
+        data-testid="new-list-button"
+        onClick={() => {
+          props.setShowInput(true);
+          props.setEditedList(blankList);
       }
-      }>New list</button><br/>
+      }>New list
+      </Button>
+      <br/>
       {props.showInput &&
-          <div>
-              <label htmlFor="title-input">Title</label>
-              <input
-                  id="title-input"
-                  type="text"
-                  minLength={4}
-                  maxLength={8}
-                  value={initialList.title}
-                  onChange={(e) => props.setEditedList({...initialList, title: e.target.value})}
-              /><br/>
-              <label htmlFor="title-input">Description</label>
-              <input
-                  id="description-input"
-                  type="text"
-                  minLength={4}
-                  maxLength={12}
-                  value={initialList.description}
-                  onChange={(e) => props.setEditedList({...initialList, description: e.target.value})}
-              /><br/>
-            {props.editedList.items.map((item, index) => (
-              <EditItem
-                index={index}
-                key={index}
-                editedList={initialList}
-                setEditedList={props.setEditedList}
-                item={item}
-                items={props.editedList.items}
-              />
-            ))}
-              <br/>
-              <div style={{"justifyContent":"space-between"}}>
-                  <button onClick={() => {
-                    const items = props.editedList.items.concat({id:null, title:"", description:""});
-                    props.setEditedList({...props.editedList, items:items});
-                  }}>Add Item</button>
-                  <button onClick={() => handleSubmit(
-                    initialList,
-                    props.editedList.items,
-                    submitList,
-                    props.setEditedList,
-                    props.setRefresh
-                  )}>Save List</button>
-              </div>
-          </div>}
+        <div>
+          <TextField
+            id="title-input"
+            data-testid="title-input"
+            inputProps={{ maxLength: 12, minLength: 1 }}
+            helperText={"name your list"}
+            type="text"
+            label="List Title"
+            required={true}
+            value={props.editedList.title}
+            onChange={(e) =>
+              props.setEditedList({...props.editedList, title: e.target.value})}
+          />&nbsp;
+          <TextField
+            id="description-input"
+            data-testid="description-input"
+            inputProps={{ maxLength: 12, minLength: 1 }}
+            helperText={"provide a description"}
+            multiline={true}
+            type="text"
+            label="List Description"
+            required={true}
+            value={props.editedList.description}
+            onChange={(e) =>
+              props.setEditedList({...props.editedList, description: e.target.value})}
+          /><br/><br/>
+          {props.editedList.items.map((item, index) => (
+            <EditItem
+              data-testid={`edit-item-${index}`}
+              index={index}
+              key={index}
+              editedList={props.editedList}
+              setEditedList={props.setEditedList}
+              item={item}
+              items={props.editedList.items}
+            />
+          ))}
+          <br/>
+          <Button
+              data-testid="add-button"
+              onClick={() => {
+            const items = props.editedList.items.concat(blankItem);
+            props.setEditedList({...props.editedList, items:items});
+          }}>Add Item</Button>
+          <Button
+            data-testid="save-button"
+            onClick={() => props.handleSubmit(
+              props.editedList,
+              props.editedList.items,
+              props.setEditedList,
+              props.setRefresh
+          )}>Save List</Button>
+        </div>}
     </div>
   )
 }
