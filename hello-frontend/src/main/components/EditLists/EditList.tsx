@@ -64,8 +64,10 @@ export function EditList(props:EditListProps){
           <Button
               data-testid="add-button"
               onClick={() => {
-            const items = props.editedList.items.concat(blankItem);
-            props.setEditedList({...props.editedList, items:items});
+                if (props.editedList.items.every(item => item.title !== "")) {
+                  const items = props.editedList.items.concat(blankItem);
+                  props.setEditedList({...props.editedList, items:items});
+                }
           }}>Add Item</Button>
           <Button
             data-testid="save-button"

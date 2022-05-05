@@ -10,12 +10,6 @@ export function handleSubmit(
 ) {
   const submitList = toDoList.id!=null ? putUpdateToDoList : postNewToDoList;
   if (toDoList.title.length > 0 && toDoList.description.length > 0) {
-    // let items: ToDoItem[] = [];
-    // toDoItems.forEach(item => {
-    //   if (item.title !== "" && item.description !== "") {
-    //     items.push(item);
-    //   }
-    // });
     const newList:ToDoList = {...toDoList, items: toDoItems};
     submitList(newList);
     setEditedList(blankList);

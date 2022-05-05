@@ -55,6 +55,26 @@ describe('EditItem', () => {
     expect(setEditedList).toHaveBeenCalledWith(
       {...testList, items: [blankItem]});
   });
+  test('will not add with blank titles', () => {
+    render(<EditList
+      // submitList={submitList}
+      lists={testLists}
+      setLists={setLists}
+      refresh={false}
+      setRefresh={setRefresh}
+      showInput={true}
+      setShowInput={setShowInput}
+      editedList={{...testList, items: [blankItem]}}
+      setEditedList={setEditedList}
+      handleSubmit={handleSubmit}
+    />);
+    expect(screen.getByTestId("edit-list-header")).toBeInTheDocument();
+    const addButton = screen.getByTestId('add-button');
+    expect(addButton).toBeInTheDocument();
+
+    addButton.click();
+    expect(setEditedList).not.toHaveBeenCalled();
+  });
   test('renders & saves', () => {
     render(<EditList
       // submitList={submitList}
