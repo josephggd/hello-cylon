@@ -3,7 +3,7 @@ package com.example.hellobackend.controllers;
 import com.example.hellobackend.dtos.ToDoItemDto;
 import com.example.hellobackend.dtos.ToDoListDto;
 import com.example.hellobackend.entities.ToDoList;
-import com.example.hellobackend.services.ToDoItemService;
+//import com.example.hellobackend.services.ToDoItemService;
 import com.example.hellobackend.services.ToDoListService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -39,8 +39,8 @@ class DataControllerTest {
     // MockBean is annotated to every service that is to be mocked
     @MockBean
     ToDoListService toDoListService;
-    @MockBean
-    ToDoItemService toDoItemService;
+//    @MockBean
+//    ToDoItemService toDoItemService;
     // MockMvc is used to perform requests against the application
     @Autowired
     private MockMvc mockMvc;

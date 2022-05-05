@@ -1,6 +1,7 @@
 package com.example.hellobackend.services;
 
 import com.example.hellobackend.entities.ToDoList;
+import com.example.hellobackend.repositories.ToDoItemRepository;
 import com.example.hellobackend.repositories.ToDoListRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,8 @@ class ToDoListServiceTest {
     // Mock is used to simulate the behavior of the repository
     @Mock
     private ToDoListRepository toDoListRepository;
+    @Mock
+    private ToDoItemRepository toDoItemRepository;
     // InjectMocks is used to inject the mock into the service
     @InjectMocks
     ToDoListService toDoListService;
@@ -29,7 +32,7 @@ class ToDoListServiceTest {
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        toDoListService = new ToDoListService(toDoListRepository);
+        toDoListService = new ToDoListService(toDoListRepository, toDoItemRepository);
     }
 
     @AfterEach

@@ -25,6 +25,11 @@ public class ToDoItem {
     @Getter
     @Setter
     private String description;
+    public void setId(Long id) {
+        if (this.id == null) {
+            this.id = id;
+        }
+    }
     public ToDoItemDto toDto() {
         return new ToDoItemDto(this.getTitle(), this.getDescription());
     }

@@ -23,7 +23,6 @@ public class ToDoList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Setter
     private Long id;
 
     // Getters/setters for each field to eliminate boilerplate code.
@@ -51,6 +50,11 @@ public class ToDoList {
             // Name of the MANY side's column.
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<ToDoItem> items = new ArrayList<>();
+    public void setId(Long id) {
+        if (this.id == null) {
+            this.id = id;
+        }
+    }
     // Returns a DTO from an entity
     public ToDoListDto toDto() {
         ToDoListDto dto = new ToDoListDto();

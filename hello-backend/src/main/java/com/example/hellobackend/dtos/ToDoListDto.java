@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -26,7 +27,10 @@ public class ToDoListDto {
         toDoList.setId(this.id);
         toDoList.setTitle(this.title);
         toDoList.setDescription(this.description);
-        toDoList.setItems(List.of());
+        toDoList.setItems(this.items
+                .stream()
+                .map(ToDoItemDto::toEntity)
+                .collect(Collectors.toList()));
         return toDoList;
     }
 }

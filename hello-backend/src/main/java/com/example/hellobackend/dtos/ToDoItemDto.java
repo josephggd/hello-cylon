@@ -17,6 +17,7 @@ public class ToDoItemDto {
     private String description;
     public ToDoItem toEntity() {
         ToDoItem toDoItem = new ToDoItem();
+        toDoItem.setId(id);
         toDoItem.setTitle(this.title);
         toDoItem.setDescription(this.description);
         return toDoItem;

@@ -1,6 +1,7 @@
 package com.example.hellobackend.services;
 
 import com.example.hellobackend.entities.ToDoList;
+import com.example.hellobackend.repositories.ToDoItemRepository;
 import com.example.hellobackend.repositories.ToDoListRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,15 @@ public class ToDoListService {
 
     // Dictate dependency fields for TodoListService
     private final ToDoListRepository toDoListRepository;
+    private final ToDoItemRepository toDoItemRepository;
 
     // Constructor calls on autowired fields
     public ToDoListService(
-            ToDoListRepository toDoListRepository
+            ToDoListRepository toDoListRepository,
+            ToDoItemRepository toDoItemRepository
     ) {
         this.toDoListRepository = toDoListRepository;
+        this.toDoItemRepository = toDoItemRepository;
     }
 
     // Get all to do lists
@@ -43,6 +47,11 @@ public class ToDoListService {
     public void saveOrUpdateToDoList(ToDoList toDoList) {
         logger.info("Saving/updating to do list");
         // .save() returns the saved to do list
+        if (toDoList.getId() != null) {
+            ToDoList oldToDoList = this.findToDoListById(toDoList.getId());
+            toDoItemRepository.deleteAll(oldToDoList.getItems());
+        }
+        toDoItemRepository.saveAll(toDoList.getItems());
         toDoListRepository.save(toDoList);
     }
 
