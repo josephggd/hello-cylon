@@ -45,6 +45,7 @@ hello-frontend/.pnp.js
 
 # testing
 hello-frontend/coverage
+hello-frontend/cypress/screenshots/**
 
 # production
 /build
