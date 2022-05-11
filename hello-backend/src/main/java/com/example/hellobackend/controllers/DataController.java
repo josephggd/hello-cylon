@@ -26,7 +26,7 @@ public class DataController {
         this.toDoListService = toDoListService;
     }
 
-    // Full mapping to the endpoint: "localhost:9090/data/all"
+    // Full mapping to the endpoint: "localhost:8080/data/all"
     @GetMapping("/all")
     public ResponseEntity<Map<String, List<ToDoListDto>>> getAllToDoLists() {
         logger.info("getAllToDoLists() called");
@@ -48,7 +48,7 @@ public class DataController {
     }
 
     @PostMapping("/save/list")
-    // Full mapping to the endpoint: "localhost:9090/data/save"
+    // Full mapping to the endpoint: "localhost:8080/data/save"
     // Requires a ToDoList object in the request body: {"title": "title", "description": "description"}
     public ResponseEntity<String> postNewToDoList(
             @RequestBody ToDoListDto toDoListDto
@@ -59,20 +59,8 @@ public class DataController {
         return ResponseEntity.ok("SAVED");
     }
 
-//    @PostMapping("/save/item")
-//    // Full mapping to the endpoint: "localhost:9090/data/save"
-//    // Requires a ToDoList object in the request body: {"title": "title", "description": "description"}
-//    public ResponseEntity<String> postNewToDoItem(
-//            @RequestBody ToDoItemDto toDoItemDto
-//    ) {
-//        logger.info("postNewToDoItem() called");
-//        ToDoItem toDoItem = toDoItemDto.toEntity();
-//        toDoItemService.saveOrUpdateToDoItem(toDoItem);
-//        return ResponseEntity.ok("SAVED");
-//    }
-
     @PutMapping("/update/list")
-    // Full mapping to the endpoint: "localhost:9090/data/update/list"
+    // Full mapping to the endpoint: "localhost:8080/data/update/list"
     // Requires a ToDoList object in the request body: {id:1, "title": "title", "description": "description"}
     public ResponseEntity<String> putUpdateToDoList(
             @RequestBody ToDoListDto toDoListDto
@@ -83,20 +71,8 @@ public class DataController {
         return ResponseEntity.ok("UPDATED");
     }
 
-//    @PutMapping("/update/item")
-//    // Full mapping to the endpoint: "localhost:9090/data/update/item"
-//    // Requires a ToDoList object in the request body: {id:1, "title": "title", "description": "description"}
-//    public ResponseEntity<String> putUpdateToDoItem(
-//            @RequestBody ToDoItemDto toDoItemDto
-//    ) {
-//        logger.info("putUpdateToDoItem() called");
-//        ToDoItem toDoItem = toDoItemDto.toEntity();
-//        toDoItemService.saveOrUpdateToDoItem(toDoItem);
-//        return ResponseEntity.ok("UPDATED");
-//    }
-
     @DeleteMapping("/remove/list/{id}")
-    // Full mapping to the endpoint: "localhost:9090/data/delete/list/1"
+    // Full mapping to the endpoint: "localhost:8080/data/delete/list/1"
     public ResponseEntity<String> deleteToDoList(
             @PathVariable("id") Long id
     ) {
@@ -107,15 +83,4 @@ public class DataController {
         toDoListService.deleteToDoList(toDoList);
         return ResponseEntity.ok("DELETED");
     }
-
-//    @DeleteMapping("/remove/item/{id}")
-//    // Full mapping to the endpoint: "localhost:9090/data/delete/item/1"
-//    public ResponseEntity<String> deleteToDoItem(
-//            @PathVariable("id") Long id
-//    ) {
-//        logger.info("deleteToDoItem() called");
-//        ToDoItem toDoItem = toDoItemService.findToDoItemById(id);
-//        toDoItemService.deleteToDoItem(toDoItem);
-//        return ResponseEntity.ok("DELETED");
-//    }
 }

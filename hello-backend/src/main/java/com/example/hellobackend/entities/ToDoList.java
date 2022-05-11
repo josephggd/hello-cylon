@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 // Lombok annotation to generate a constructor with REQUIRED arguments.
 @RequiredArgsConstructor
+// @Table specifies the name of the table that will be created for this entity.
+@Table(name = "to_do_list")
 // @Data can be used to generate getters/setters, but we want to avoid using @Data on entities.
 public class ToDoList {
     // Primary key is an auto-incrementing integer (required by JPA)
@@ -44,7 +46,7 @@ public class ToDoList {
     // Otherwise a fetch type of LAZY would prevent immediate loading/fetching.
     @OneToMany(fetch = FetchType.EAGER)
     // Connects to the migration 'Create_to_do_items' and references the table.
-    @JoinTable(name = "todo_list_items",
+    @JoinTable(name = "to_do_list_items",
             // Name of the ONE side's column.
             joinColumns = @JoinColumn(name = "list_id"),
             // Name of the MANY side's column.

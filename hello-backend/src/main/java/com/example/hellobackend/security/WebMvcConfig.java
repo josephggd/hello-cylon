@@ -13,8 +13,6 @@ import java.util.Arrays;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     protected final String[] allowedMethods = {"GET", "POST", "PUT", "DELETE", "OPTIONS"};
-    @Value("${frontend.url}")
-    private String frontendUrl;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -25,7 +23,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns(frontendUrl)
                 .allowedHeaders("*")
                 .allowedMethods(allowedMethods)
                 .allowCredentials(true);
