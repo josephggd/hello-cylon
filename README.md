@@ -1,6 +1,6 @@
 **Onboarding Process for Team Cylon Developers**
 
-![Cylon Logo](CylonLogo.png "Team Cylon")
+![Cylon Logo]([cylon.gif]https://github.com/josephggd/hello-cylon/blob/master/hello-frontend/public/cylon.gif "Team Cylon")
 
 # Necessary Software:
 
